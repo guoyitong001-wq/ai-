@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List App</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        #todo-list { margin-top: 20px; }
+        .todo-item { display: flex; justify-content: space-between; }
+    </style>
+</head>
+<body>
+    <h1>Todo List Application</h1>
+    <input type="text" id="todo-input" placeholder="Add a new todo" />
+    <button id="add-todo">Add</button>
+    <div>
+        <button id="filter-all">All</button>
+        <button id="filter-active">Active</button>
+        <button id="filter-completed">Completed</button>
+    </div>
+    <div id="todo-list"></div>
+    <div id="stats"></div>
+
+    <script>
+        const todos = [];
+        const todoInput = document.getElementById('todo-input');
+        const todoList = document.getElementById('todo-list');
+        const stats = document.getElementById('stats');
+
+        document.getElementById('add-todo').addEventListener('click', () => {
+            const text = todoInput.value.trim();
+            if (text) {
+                const todo = { text, completed: false };
+                todos.push(todo);
+                renderTodos();
+                todoInput.value = '';
+            }
+        });
+
+        function renderTodos() {
+            todoList.innerHTML = '';
+            todos.forEach((todo, index) => {
+                const todoItem = document.createElement('div');
+                todoItem.className = 'todo-item';
+                todoItem.innerHTML = `
+                    <span style='text-decoration: ${todo.completed ? "line-through" : "none"};'>${todo.text}</span>
+                    <button onclick='toggleComplete(${index})'>${todo.completed ? "Undo" : "Complete"}</button>
+                `;
+                todoList.appendChild(todoItem);
+            });
+            updateStats();
+        }
+
+        function toggleComplete(index) {
+            todos[index].completed = !todos[index].completed;
+            renderTodos();
+        }
+
+        function updateStats() {
+            const total = todos.length;
+            const completed = todos.filter(todo => todo.completed).length;
+            stats.innerHTML = `Total: ${total}, Completed: ${completed}`;
+        }
+    </script>
+</body>
+</html>
