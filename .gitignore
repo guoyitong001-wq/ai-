@@ -1,0 +1,26 @@
+# Python .gitignore
+
+# Byte-compiled files
+__pycache__/
+*.py[cod]
+
+# Distribution / packaging
+.Python
+build/
+dist/
+.egg-info/
+*.egg
+
+# Virtual environment
+venv/
+ENV/
+env/
+
+# Local configuration files
+*.local
+*.env
+
+# Compiled files
+*.so
+*.dll
+*.dylib
